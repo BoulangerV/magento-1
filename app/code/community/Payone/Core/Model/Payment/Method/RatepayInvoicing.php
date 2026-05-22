@@ -251,14 +251,15 @@ class Payone_Core_Model_Payment_Method_RatepayInvoicing extends Payone_Core_Mode
                 $blAddressesAreEqual = $this->helper()->addressesAreEqual($oQuote->getBillingAddress(), $oQuote->getShippingAddress());
 
                 $aRatepayShopIds = $this->_getApplicableRatepayShopIds($oQuote);
+                $sRatepayShopIdsCondition = $oRead->quoteInto('shop_id IN (?)', $aRatepayShopIds);
 
                 $sQuery = " SELECT
                                 shop_id
                             FROM
                                 {$sTable}
                             WHERE 
-                                shop_id IN ('".implode("','", $aRatepayShopIds)."') AND
-                                {$oQuote->getGrandTotal()} BETWEEN tx_limit_invoice_min AND tx_limit_invoice_max AND
+                                {$sRatepayShopIdsCondition} AND
+                                " . (float)$oQuote->getGrandTotal() . " BETWEEN tx_limit_invoice_min AND tx_limit_invoice_max AND
                                 country_code_billing = {$oRead->quote($oQuote->getBillingAddress()->getCountryId())}";
                 if($blAddressesAreEqual === false) {
                     $sQuery .= " AND delivery_address_invoice = 1 ";

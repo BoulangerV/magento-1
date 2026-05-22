@@ -125,6 +125,31 @@ class Payone_Core_Block_Payment_Method_Form_SafeInvoice_Klarna
     }
 
     /**
+     * Retrieve payment method model
+     *
+     * @return Mage_Payment_Model_Method_Abstract
+     */
+    public function getMethod()
+    {
+        $method = Mage::getModel('payone_core/payment_method_safeinvoice');
+
+        if (!($method instanceof Mage_Payment_Model_Method_Abstract)) {
+            Mage::throwException($this->__('Cannot retrieve the payment method model object.'));
+        }
+        return $method;
+    }
+
+    /**
+     * Retrieve payment method code
+     *
+     * @return string
+     */
+    public function getMethodCode()
+    {
+        return $this->getMethod()->getCode();
+    }
+
+    /**
      * @return bool
      */
     public function isDobRequired()
