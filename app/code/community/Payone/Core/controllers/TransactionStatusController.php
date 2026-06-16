@@ -213,8 +213,8 @@ class Payone_Core_TransactionStatusController extends Payone_Core_Controller_Abs
         curl_setopt($oCurl, CURLOPT_POST, 1);
         curl_setopt($oCurl, CURLOPT_POSTFIELDS, $sParams);
 
-        curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, true);
+        curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, 2);
 
         curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($oCurl, CURLOPT_TIMEOUT, $iTimeout);

@@ -29,6 +29,8 @@ $country = $this->getCountry();
 $quote = $this->getQuote();
 /** @var Payone_Core_Model_Config_Payment_Method_Interface $paymentMethodConfig */
 $paymentMethodConfig = $this->getPaymentMethodConfig();
+/** @var string $code */
+$code = $this->getMethodCode();
 ?>
 <?php if ($this->canShowAdditionalFields()): ?>
     <div id="payone_klarna_invoice_terms_div">
@@ -39,12 +41,12 @@ $paymentMethodConfig = $this->getPaymentMethodConfig();
             <?php if ($this->isDobRequired()): ?>
                 <li class="fields">
                     <div class="field">
-                        <label for="payone_klarna_additional_fields_customer_dob_month"
+                        <label for="<?php echo $code ?>_additional_fields_customer_dob_month"
                                class="required"><em>*</em><?php echo $this->__('Date of birth (DD MM YYYY)') ?>
                         </label>
                         <br class="clear"/>
-                        <select id="payone_klarna_additional_fields_customer_dob_day" class="required-entry"
-                                style="width: 60px;" onchange="payoneKlarnaCustomerDobInput('payone_klarna_additional_fields_customer_dob_full')">
+                        <select id="<?php echo $code ?>_additional_fields_customer_dob_day" class="required-entry"
+                                style="width: 60px;" onchange="payoneKlarnaCustomerDobInput('<?php echo $code ?>_additional_fields_customer_dob_full')">
                             <option value="">--</option>
                             <?php for ($x = 1; $x <= 31; $x++): ?>
                                 <option value="<?php echo sprintf('%02d', $x); ?>">
@@ -52,8 +54,8 @@ $paymentMethodConfig = $this->getPaymentMethodConfig();
                                 </option>
                             <?php endfor; ?>
                         </select>
-                        <select id="payone_klarna_additional_fields_customer_dob_month" class="required-entry"
-                                style="width: 60px;" onchange="payoneKlarnaCustomerDobInput('payone_klarna_additional_fields_customer_dob_full')">
+                        <select id="<?php echo $code ?>_additional_fields_customer_dob_month" class="required-entry"
+                                style="width: 60px;" onchange="payoneKlarnaCustomerDobInput('<?php echo $code ?>_additional_fields_customer_dob_full')">
                             <option value="">--</option>
                             <?php for ($x = 1; $x <= 12; $x++) : ?>
                                 <option value="<?php echo sprintf('%02d', $x); ?>">
@@ -61,8 +63,8 @@ $paymentMethodConfig = $this->getPaymentMethodConfig();
                                 </option>
                             <?php endfor; ?>
                         </select>
-                        <select id="payone_klarna_additional_fields_customer_dob_year" class="required-entry"
-                                style="width: 60px;" onchange="payoneKlarnaCustomerDobInput('payone_klarna_additional_fields_customer_dob_full')">
+                        <select id="<?php echo $code ?>_additional_fields_customer_dob_year" class="required-entry"
+                                style="width: 60px;" onchange="payoneKlarnaCustomerDobInput('<?php echo $code ?>_additional_fields_customer_dob_full')">
                             <option value="">----</option>
                             <?php for ($x = date('Y'); $x > (date('Y') - 100); $x--) : ?>
                                 <option value="<?php echo $x; ?>">

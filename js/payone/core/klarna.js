@@ -20,12 +20,19 @@
  * @link            http://www.noovias.com
  */
 
-function payoneKlarnaCustomerDobInput(output_element)
+function payoneKlarnaCustomerDobInput(output_element_name)
 {
-    var daySelect = $('payone_klarna_base_additional_fields_customer_dob_day');
-    var monthSelect = $('payone_klarna_base_additional_fields_customer_dob_month');
-    var yearSelect = $('payone_klarna_base_additional_fields_customer_dob_year');
-    var hiddenDobFull = $(output_element);
+    var code = 'payone_klarna_base';
+    var hiddenDobFullElement = output_element_name;
+    if(output_element_name.includes('payone_safe_invoice')){
+        code = 'payone_safe_invoice';
+        hiddenDobFullElement = 'payone_klarna_additional_fields_customer_dob_full';
+    }
+
+    var daySelect = $(code + '_additional_fields_customer_dob_day');
+    var monthSelect = $(code + '_additional_fields_customer_dob_month');
+    var yearSelect = $(code + '_additional_fields_customer_dob_year');
+    var hiddenDobFull = $(hiddenDobFullElement);
 
     if (daySelect == undefined || monthSelect == undefined || yearSelect == undefined
         || hiddenDobFull == undefined)  {

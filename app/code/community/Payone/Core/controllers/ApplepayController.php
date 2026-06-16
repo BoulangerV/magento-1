@@ -46,6 +46,24 @@ class Payone_Core_ApplepayController extends Payone_Core_Controller_Abstract
         $shopFQDN = $_SERVER['SERVER_NAME'];
         $validationUrl = $this->getRequest()->get('validationUrl');
 
+        $allowedDomains = [
+            'apple-pay-sdk.apple.com',
+            'cn-apple-pay-sdk.apple.com'
+        ];
+        $urlParts = parse_url($validationUrl);
+        if (!$urlParts || !isset($urlParts['host']) || !in_array($urlParts['host'], $allowedDomains) || $urlParts['scheme'] !== 'https') {
+            Mage::log('Invalid Apple Pay validation URL: ' . $validationUrl);
+            $this->getResponse()
+                ->clearHeaders()
+                ->setHeader('HTTP/1.0', 400, true)
+                ->setHeader('Content-Type', 'application/json')
+                ->setBody(json_encode([
+                    'status' => 'ERROR',
+                    'message' => $this->__('Invalid validation URL')
+                ]));
+            return $this->getResponse();
+        }
+
         try {
             $quoteId = $this->getRequest()->get('quoteId');
             $quote = Mage::getModel('sales/quote')->load($quoteId);

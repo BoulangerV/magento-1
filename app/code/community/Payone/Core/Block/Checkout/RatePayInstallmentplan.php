@@ -57,10 +57,11 @@ class Payone_Core_Block_Checkout_RatePayInstallmentplan extends Mage_Core_Block_
      */
     public function getFormattedNumber($paramName)
     {
+        $sValue = $this->getData($paramName);
         if (empty($this->getData($paramName))) {
-            return '';
+            $sValue = 0;
         }
 
-        return number_format($this->getData($paramName), 2, ',', '.');
+        return number_format($sValue, 2, ',', '.');
     }
 }
